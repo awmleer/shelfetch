@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shelfetch</title>
+
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <!--<script src="js/jquery.min.js"></script>-->
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            //          调整页面布局
+            if($(window).height()<$(window).width()){
+                $(".container").css("width","500px");
+                $(".container").css("margin","0 auto");
+            }
+        })
+    </script>
+</head>
+<body>
+<div class="container">
+    <img src="http://121.42.209.162/shelfetch/pic/logo.png" style="width: 80%;margin: 2em auto 1em;display: block;">
+    <span style="font-size: xx-large;font-weight: lighter;display:block;text-align:center">意见反馈</span>
+    <p>请给shelfetch打个分</p>
+        <input type="radio" name="optionsRadiosinline" id="optionsRadios5" value="5">很满意
+        <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="4">满意
+        <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="3">一般
+        <input type="radio" name="optionsRadiosinline" id="optionsRadios2" value="2">较差
+        <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="1">很差
+    <br><br>
+    <p>请描述一下您的意见：</p>
+    <textarea id="content" class="form-control" rows="3"></textarea>
+    <br>
+    <p>留一下您的手机号吧~（选填）：</p>
+    <input id="tel" type="text" class="form-control">
+    <br>
+    <p>怎么称呼您？（选填）：</p>
+    <input id="name" type="text" class="form-control">
+    <br>
+    <button onclick="feedback()" type="button" class="btn btn-primary" style="width: 70%;display: block;margin: auto;">提交反馈</button>
+    <br>
+    <button onclick="location.href='index.html'" type="button" class="btn btn-default" style="width: 70%;display: block;margin: auto;">返回</button>
+
+    <p class="text-center" style="margin-top: 2em;color: #8c8c8c;">sparker团队出品&nbsp;&nbsp;
+        <!--CNZZ站长统计-->
+        <script type="text/javascript">
+            var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_1256977739'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256977739' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </p>
+</div>
+
+<script>
+    function feedback(){
+        var score,content,tel,name,school;
+        var url = location.search; //获取url中"?"符后的字串
+        url=url.substr(1);
+        school=url.split("=");
+        score=$('input[name="optionsRadiosinline"]:checked').attr("value");
+        content=$("#content").val();
+        tel=$("#tel").val();
+        name=$("#name").val();
+
+        if(score==undefined){
+            alert("请先进行评分");
+            return false;
+        }
+        if(content=="")content="0";
+        if(tel=="")tel="0";
+        if(name=="")name="0";
+        var temp;
+        temp=tel.match(/[0-9]*/);
+
+        $.post("http://121.42.209.162/cgi-bin/sffeedback.py",{score:score,content:content,tel:tel,name:name,school:school[1]},
+                function(data){
+                    var temp=data.split("*");
+                    if(temp==null){
+                        alert("反馈失败，请稍后再试。")
+                    }else{
+                        alert("反馈成功！谢谢！\n您的反馈编号为：\n"+temp[0]);
+                    }
+                }
+        );
+    }
+</script>
+</body>
+</html>

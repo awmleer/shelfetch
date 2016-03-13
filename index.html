@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keyword" content="图书馆,找书,大学,图书,定位,确定,位置,索书号,Shelfetch,搜索书籍并确定它在图书馆中的位置,浙江大学">
+    <meta name="description" content="一键找书，拒绝繁琐">
+    <title>shelfetch</title>
+
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <!-- 加载特效css -->
+    <link rel="stylesheet" type="text/css" href="http://121.42.209.162/shelfetch/css/spinner.css">
+
+    <script>
+        $(document).ready(function () {
+            //初始化waiting特效的margin
+            var windowheight = $(window).height();
+            $("#div-waiting").css("margin-top", windowheight * 0.3 + "px");
+//          记录&获取点击量
+//            $.get("http://121.42.209.162/cgi-bin/sfindexcount.py",{},
+//                    function(data){
+//                        $("#span-indexcount").html(data);
+//                    }
+//            );
+
+//          调整页面布局
+            if ($(window).height() < $(window).width()) {
+                $(".container").css("width", "500px");
+                $(".container").css("margin", "0 auto");
+            }
+
+//          激活弹出框
+            $(function () {
+                $("[data-toggle='popover']").popover();
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+<div id="div-main" class="container" style="margin-right: 10%;margin-left: 10%">
+    <img src="http://121.42.209.162/shelfetch/pic/logo.png" style="width: 100%;margin: 2em auto;display: block;">
+
+    <div id="billboard" class="alert alert-info">
+        <p>shelfetch于12.21日刚刚上线，目前可能会较为不稳定，如果遇到页面卡死的情况，请刷新浏览器。我们正在不断的完善中，请谅解。<br>
+            如果您有意向加入我们，请<a data-toggle="modal" href="#contact">点这里</a>。
+        </p>
+    </div>
+
+    <div class="form-group">
+        <p>请选择学校：</p>
+        <select id="sel-xx" class="form-control">
+            <option value="zju">浙江大学</option>
+        </select>
+        <br>
+
+        <p style="display: inline-block;">请选择查找的模式 </p>
+
+        <div style="display: inline-block;" class="btn-group">
+            <button id="btn-sm" onclick="tosm()" type="button" class="btn btn-primary">书名</button>
+                <button id="btn-ssh" onclick="tossh()" type="button" class="btn btn-default">索书号</button>
+        </div>
+        <br>
+
+        <div id="div-ssh" style="display: none;">
+            <p>请选择分馆：</p>
+            <select id="sel-fg" class="form-control">
+                <option value="zjgjc">紫金港基础馆</option>
+                <option value="zjgyx">紫金港医学图书馆</option>
+            </select>
+            <br>
+
+            <p style="display: inline-block;">请输入索书号：</p>
+            <span id="badge-ssh" class="badge" data-toggle="popover" title="索书号"
+                  data-content="索书号就是图书的书脊标签上的一系列字母和数字，您可以在图书馆的图书搜索网站或APP上通过搜索得到。如：TP312HT/CT2" data-placement="top">什么是索书号?点我</span>
+            <input id="input-ssh" class="form-control" type="text" placeholder="索书号 如：TP312HT/CT2">
+            <br>
+            <button type="button" onclick="btnclickssh()" class="btn btn-primary"
+                    style="display: block;width: 70%;margin: auto;">查找这本书所在的位置
+            </button>
+        </div>
+        <div id="div-sm">
+            <p style="display: inline-block;">请输入书名：</p>
+            <input id="input-sm" class="form-control" type="text" placeholder="请输入书本的名称">
+            <br>
+            <button type="button" onclick="btnclicksm()" class="btn btn-primary"
+                    style="display: block;width: 70%;margin: auto;">搜索书籍
+            </button>
+        </div>
+        <br>
+
+        <div style="display: block; width: 70%;margin: auto;">
+            <div class="btn-group" style="width: 100%;">
+                <button data-toggle="modal" data-target="#help" type="button" class="btn btn-default"
+                        style="width: 50%;">使用帮助
+                </button>
+                <button type="button" onclick="location.href='feedback.html?xx='+$('#sel-xx').val()"
+                        class="btn btn-default" style="width: 50%;">反馈意见
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <p class="text-center" style="margin-top: 2em;color: #8c8c8c;">sparker团队·<a data-toggle="modal"
+                                                                                href="#contact">联系我们</a>
+        <br>
+        v1.3
+        <!--自己造的点击量统计<span id="span-indexcount"></span>-->
+        <!--CNZZ站长统计-->
+        <script type="text/javascript">
+            var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_1256977739'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256977739' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </p>
+</div>
+
+<!--模态框（Modal）-->
+<div class="modal fade" id="contact" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    联系我们
+                </h4>
+            </div>
+            <div class="modal-body">
+                加入我们：<br>
+                郝同学 TEL：<a href="tel:18143465393">18143465393</a><br>
+                <br>
+                意见反馈：<br>
+                李同学 TEL：<a href="tel:18867137991">18867137991</a><br>
+                <br>
+                技术咨询：<br>
+                秦同学 TEL：<a href="tel:15764384954">15764384954</a><br>
+                <br>
+                合作商谈：<br>
+                朱同学 TEL：<a href="tel:15558097132">15558097132</a><br>
+                <br>
+                欢迎加入我们！<br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!--模态框（Modal）-->
+<div class="modal fade" id="help" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    使用帮助
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>shelfetch=shelf+fetch<br>
+                    <br>
+                    shelfetch可以做什么？<br>
+                    输入你要查找图书的索书号，即可显示出该图书的所在的书架，当然您也可以通过输入书的名字进行搜索。<br>
+                    目前shelfetch的数据正在不断完善中……
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<div id="div-waiting" style="display: none;">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+    <p class="text-center">正在加载中，请稍等</p>
+</div>
+
+<script>
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
+    //    $('.badge').popover(options);
+    $('*').focus(function () {
+        $("[data-toggle='popover']").popover('hide');
+    });
+    $(function ($) {
+        $(document).delegate("body", "click", function (e) {
+            $('#identifier').popover('hide');
+        });
+    });
+
+    function btnclickssh() {
+        var xx, fg, ssh;
+        xx = $("#sel-xx").val();
+        fg = $("#sel-fg").val();
+        ssh = $("#input-ssh").val();
+
+        if (fg == "zjgyx") {
+            alert("抱歉，医学图书馆的数据库正在建设中，目前无法使用");
+            return false;
+        }
+
+
+        ssh = ssh.toUpperCase();//转化为大写
+        //      检查是否为错误的索书号
+        if (ssh == "") {
+            alert("请输入索书号");
+            return false;
+        }
+
+        var strtemp = ssh.split("/");
+        if (strtemp.length == 1) {
+            alert("索书号中需要有左斜杠(/)分割\n例如：\nTP312HT CT2是一个错误的索书号\n而TP312HT/CT2则是一个正确的索书号");
+            return false;
+        }
+
+        var temp = ssh.substr(0, 1);
+        if (temp >= 'A' & temp <= 'Z') {
+        } else {
+            alert("您输入的索书号错误");
+            return false;
+        }
+
+//      显示waiting
+        $("#div-waiting").show();
+        $("#div-main").hide();
+
+
+//      索书号预格式化
+        var x = ssh;
+        var reg;
+        reg = /[?？][A-Z]*\d*/;
+        x = x.replace(reg, "");
+        reg = /[;；][A-Z]*\d*/;
+        x = x.replace(reg, "");
+        reg = /[:：][A-Z]*\d*/;
+        x = x.replace(reg, "");
+        reg = /\([A-Z]*\d*\)/;
+        x = x.replace(reg, "");
+        reg = /[（[A-Z]*\d*）/;
+        x = x.replace(reg, "");
+        reg = /[<[A-Z]*\d*>/;
+        x = x.replace(reg, "");
+        reg = /[“[A-Z]*\d*”/;
+        x = x.replace(reg, "");
+        reg = /["[A-Z]*\d*"/;
+        x = x.replace(reg, "");
+
+
+//      索书号格式化
+        var y = "";
+        var temp2, deng, zimu;
+
+//      前后切割
+        x = x.split("/");
+
+//      等号
+        temp = x[0].match(/=[A-Z]*\d*/);
+        if (temp == null) {
+            deng = "000";
+        } else {
+            x[0] = x[0].replace(temp[0], "");
+            temp[0] = temp[0].substr(1);
+            temp2 = temp[0] + "000";
+            deng = temp2.substr(0, 3);
+        }
+
+
+//      两位字母（首位）
+        temp = x[0].match(/[A-Z]+/);
+        if (temp == null) {
+            y = y + "@@";
+        } else {
+            temp2 = temp[temp.length - 1] + "@";
+            temp2 = temp2.substr(0, 2);
+            y = y + temp2;
+            x[0] = x[0].substr(temp[0].length);
+        }
+
+
+//      两位字母(末尾)
+        temp = x[0].match(/[A-Z]+/);
+        if (temp == null) {
+            zimu = "@@";
+        } else {
+            temp2 = temp[temp.length - 1] + "@";
+            temp2 = temp2.substr(0, 2);
+            zimu = temp2;
+            x[0] = x[0].replace(temp[temp.length - 1], "");
+        }
+
+        var dot = x[0].split(".");
+        var len = dot.length;
+        var i;
+        for (i = 0; i < len; i++) {
+            temp = dot[i].match(/\d+/);
+            if (temp == null) {
+                temp2 = "000";
+            } else {
+                temp2 = temp[0] + "000";
+            }
+            temp2 = temp2.substr(0, 3);
+            y = y + temp2;
+            if (temp != null)dot[i] = dot[i].substr(temp[0].length);
+            if (dot[i].charAt(0) == "-") {
+                dot[i] = dot[i].substr(1);
+                temp = dot[i].match(/\d+/);
+                temp2 = temp[0] + "000";
+                temp2 = temp2.substr(0, 3);
+                y = y + temp2;
+                if (temp != null)dot[i] = dot[i].substr(temp[0].length);
+            } else {
+                y = y + "000";
+            }
+        }
+        if (len == 1)y = y + "000000000000";
+        if (len == 2)y = y + "000000";
+
+
+//      补上等号和最后两个字母
+        y = y + deng;
+        y = y + zimu;
+
+
+//      下面是后半部分
+//      两位字母
+        temp = x[1].match(/[A-Z]+/);
+        if (temp == null) {
+            y = y + "@@";
+        } else {
+            temp2 = temp[0] + "@";
+            temp2 = temp2.substr(0, 2);
+            y = y + temp2;
+            if (temp != null)x[1] = x[1].substr(temp[0].length);
+        }
+
+//      三位数字
+        temp = x[1].match(/\d+/);
+        if (temp == null) {
+            y = y + "000";
+        } else {
+            temp2 = temp[0] + "000";
+            temp2 = temp2.substr(0, 3);
+            y = y + temp2;
+            if (temp != null)x[1] = x[1].substr(temp[0].length);
+        }
+
+
+//      剩余的数字
+        if (x[1].charAt(0) == ".") {
+            x[1] = x[1].substr(1);
+            temp = x[1].match(/\d+/);
+            if (temp == null) {
+                temp2 = "000";
+            } else {
+                temp2 = temp[0] + "000";
+            }
+            temp2 = temp2.substr(0, 3);
+            y = y + temp2;
+            if (temp != null)x[1] = x[1].substr(temp[0].length);
+            if (x[1].charAt(0) == "-") {
+                x[1] = x[1].substr(1);
+                temp = x[1].match(/\d+/);
+                if (temp == null) {
+                    temp2 = "000";
+                } else {
+                    temp2 = temp[0] + "000";
+                }
+                temp2 = temp2.substr(0, 3);
+                y = y + temp2;
+                if (temp != null)x[1] = x[1].substr(temp[0].length);
+            }
+        } else if (x[1].charAt(0) == "-") {
+            y = y + "000";
+            x[1] = x[1].substr(1);
+            temp = x[1].match(/\d+/);
+            if (temp == null) {
+                temp2 = "000";
+            } else {
+                temp2 = temp[0] + "000";
+            }
+            temp2 = temp2.substr(0, 3);
+            y = y + temp2;
+            if (temp != null)x[1] = x[1].substr(temp[0].length);
+        } else {
+            y = y + "000000";
+        }
+
+
+        $.get("http://121.42.209.162/cgi-bin/shelfetch.py", {xx: xx, fg: fg, ssh: y},
+                function (data) {
+                    var strs = data.split("&");
+                    var fjh = strs[0];
+                    var jh = strs[1];
+                    $("#div-main").show();
+                    $("#div-waiting").hide();
+                    location.href = "result-" + xx + "-" + fg + "-" + fjh + ".html?ssh==" + ssh + "&jh=" + jh;
+                }
+        );
+    }
+
+    function btnclicksm() {
+        var sm = $("#input-sm").val();
+        if (sm == "") {
+            alert("请输入书名");
+            return false;
+        }
+        location.href = "search.html?" + sm + "&1";
+    }
+
+    function tossh() {
+        $("#btn-ssh").removeClass("btn-default");
+        $("#btn-ssh").addClass("btn-primary");
+        $("#btn-sm").removeClass("btn-primary");
+        $("#btn-sm").addClass("btn-default");
+        $("#div-sm").hide();
+        $("#div-ssh").show();
+    }
+
+    function tosm() {
+        $("#btn-ssh").removeClass("btn-primary");
+        $("#btn-ssh").addClass("btn-default");
+        $("#btn-sm").removeClass("btn-default");
+        $("#btn-sm").addClass("btn-primary");
+        $("#div-sm").show();
+        $("#div-ssh").hide();
+    }
+
+
+</script>
+
+<!--百度爬虫-->
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        bp.src = '//push.zhanzhang.baidu.com/push.js';
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+</body>
+</html>

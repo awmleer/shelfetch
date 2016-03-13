@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>shelfetch</title>
+
+    <!-- 调试时先使用本地的文件 -->
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <!--  <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!--<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>-->
+    <script src="js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //读取URL参数
+            var ssh, jh;
+            var url = location.search; //获取url中"?"符后的字串
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                var strs = str.split("&");
+                ssh = strs[0].split("=")[1];
+                $("#lab-ssh").html("索书号：" + ssh);//设置索书号的label
+                jh = strs[1].split("=")[1];
+                alert(jh);
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <span style="font-size: xx-large;font-weight: lighter;display:block;text-align:center">shelfetch</span>
+
+</div>
+
+</body>
+</html>

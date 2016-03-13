@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>shelfetch后台管理</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <!--  <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!--<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>-->
+    <script src="../js/jquery.min.js"></script>
+    <!--最新的 Bootstrap 核心 JavaScript 文件 -->
+    <!--<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script src="../js/jquery.cookie.js"></script>
+
+    <script>
+        //从url中读取code并储存在code变量中
+        $(document).ready(function(){
+            var temp=location.search.split("=");
+            code=temp[1];
+        })
+
+        function feedbackchakan(id){
+            $.get("http://121.42.209.162/cgi-bin/sfbackstage.py?act=fdbkrd",{id=id},function(data){
+                $("#feedbackModal .modal-body").append(
+                        data
+                );
+            });
+            $("#feedbackModal").modal({});
+        }
+    </script>
+
+
+    <style>
+        body{
+            font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+        }
+        #feedbacklist tr td{
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="functions">
+        <button class="btn btn-primary">点击量统计</button>
+        <button onclick="feedbackbutton()" class="btn btn-primary" style="">用户反馈</button>
+    </div>
+
+
+
+    <div id="feedbacklist" style="display: none">
+        <table class="table table-hover">
+            <caption>用户反馈查看</caption>
+            <colgroup>
+                <col width="15%">
+                <col width="15%">
+                <col width="20%">
+                <col width="50%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>状态</th>
+                <th>查看</th>
+                <th>标记</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td style='color: #000000;font-weight: bold'>未读</td>
+                <td><button class="btn btn-success" onclick="feedbackchakan(1)">查看</button></td>
+                <td>
+                    <button class="btn btn-default">标为已读</button>
+                    <button class="btn btn-default">标为未读</button>
+                    <button class="btn btn-default">标为待办</button>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td style='color: #aaaaaa;'>已读</td>
+                <td><button class="btn btn-success">查看</button></td>
+                <td>
+                    <button class="btn btn-default">标为已读</button>
+                    <button class="btn btn-default">标为未读</button>
+                    <button class="btn btn-default">标为待办</button>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td style='color: #dd4c39'>待办</td>
+                <td><button class="btn btn-success">查看</button></td>
+                <td>
+                    <button class="btn btn-default">标为已读</button>
+                    <button class="btn btn-default">标为未读</button>
+                    <button class="btn btn-default">标为待办</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        用户反馈-详细信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    在这里添加一些文本
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-warning">标为待办</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+<script>
+    function feedbackbutton(){
+        alert("ok");
+        $("#feedbacklist").show();
+        feedbackfresh();
+    }
+
+
+
+
+    function feedbackfresh(){
+        $.get("http://121.42.209.162/cgi-bin/sfbackstage.py?act=fdbkct",
+                function(data){
+                    data=data.replace("\n","");
+                    var i;
+                    var weidu,yidu,daiban,temp;
+
+                    weidu="<tr>" +
+                            "<td>iiiii</td>" +
+                            "<td style='color: #000000;font-weight: bold'>未读</td>" +
+                            "<td><button class='btn btn-success' onclick='feedbackchakan(iiiii)'>查看</button></td>" +
+                            "<td><button class='btn btn-default'>标为已读</button> <button class='btn btn-default'>标为未读</button> <button class='btn btn-default'>标为待办</button> </td> " +
+                            "</tr>";
+
+                    yidu="<tr>" +
+                            "<td>iiiii</td>" +
+                            "<td style='color: #aaaaaa;'>已读</td>" +
+                            "<td><button class='btn btn-success' onclick='feedbackchakan(iiiii)'>查看</button></td>" +
+                            "<td><button class='btn btn-default'>标为已读</button> <button class='btn btn-default'>标为未读</button> <button class='btn btn-default'>标为待办</button> </td> " +
+                            "</tr>";
+
+                    daiban="<tr>" +
+                            "<td>iiiii</td>" +
+                            "<td style='color: #dd4c39'>待办</td>" +
+                            "<td><button class='btn btn-success' onclick='feedbackchakan(iiiii)'>查看</button></td>" +
+                            "<td><button class='btn btn-default'>标为已读</button> <button class='btn btn-default'>标为未读</button> <button class='btn btn-default'>标为待办</button> </td> " +
+                            "</tr>";
+
+                    $("#feedbacklist tbody").empty();
+
+                    for(i=1;i<=data.length;i++){
+                        switch (data.charAt([i-1])){
+                            case '0':
+                                temp=weidu;
+                                temp=temp.replace("iiiii",i);
+                                break;
+                            case '1':
+                                temp=yidu;
+                                temp=temp.replace("iiiii",i);
+                                break;
+                            case '2':
+                                temp=daiban;
+                                temp=temp.replace("iiiii",i);
+                                break;
+                        }
+                        $("#feedbacklist tbody").append(temp);
+                    }
+                });
+    }
+</script>
+
+    <script>
+
+
+
+    </script>
+
+</body>
+
+
+
+</html>
