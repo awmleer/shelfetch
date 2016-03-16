@@ -107,11 +107,9 @@
     </div>
 
 
-    <p class="text-center" style="margin-top: 2em;color: #8c8c8c;">sparker团队·<a data-toggle="modal"
-                                                                                href="#contact">联系我们</a>
+    <p class="text-center" style="margin-top: 2em;color: #8c8c8c;">sparker团队·<a data-toggle="modal" href="#contact">联系我们</a>
         <br>
         v1.3
-        <!--自己造的点击量统计<span id="span-indexcount"></span>-->
         <!--CNZZ站长统计-->
         <script type="text/javascript">
             var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
@@ -194,6 +192,8 @@
     <!-- /.modal -->
 </div>
 
+
+<!--加载动画-->
 <div id="div-waiting" style="display: none;">
     <div class="spinner">
         <div class="rect1"></div>
@@ -204,6 +204,7 @@
     </div>
     <p class="text-center">正在加载中，请稍等</p>
 </div>
+
 
 <script>
     $(function () {
@@ -417,7 +418,7 @@
         }
 
 
-        $.get("http://121.42.209.162/cgi-bin/shelfetch.py", {xx: xx, fg: fg, ssh: y},
+        $.get("http://121.42.209.162:3031/api/"+xx+"/locate", {fg: fg, ssh: y},
                 function (data) {
                     var strs = data.split("&");
                     var fjh = strs[0];
