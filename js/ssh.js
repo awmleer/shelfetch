@@ -5,6 +5,7 @@
 
 function formatssh(ssh){
     //      索书号预格式化
+    ssh = ssh.toUpperCase();//转化为大写
     var x = ssh;
     var reg;
     reg = /[?？][A-Z]*\d*/;

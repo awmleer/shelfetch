@@ -247,8 +247,7 @@
         }
 
         var temp = ssh.substr(0, 1);
-        if (temp >= 'A' && temp <= 'Z') {
-        } else {
+        if (!(temp >= 'A' && temp <= 'Z')) {
             alert("您输入的索书号错误");
             return false;
         }
