@@ -51,7 +51,7 @@
                 }
             }).done(function (data) {
                     var obj = eval(data);
-                    if (obj[1].total == "0") {
+                    if (obj.length == "0") {
                         $("#div-waiting").hide();
                         $("#div-noresult").show();
                         return false;
@@ -78,7 +78,7 @@
                     //          初始化标头信息
                     $("#keyword").text("搜索词：" + keyword);
 
-                    var total = obj[1].total;
+                    var total = obj.length;
                     $("#page").text("第" + page + "页/共" + total + "页");
 
 //                      初始化分页模块
