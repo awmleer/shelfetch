@@ -15,31 +15,8 @@
     <!--<script src="js/jquery.min.js"></script>-->
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="js/result.js"></script>
 
-
-    <script>
-        var ssh,jh;
-        $(document).ready(function(){
-            //读取URL参数
-            var url = location.search; //获取url中"?"符后的字串
-            if (url.indexOf("?") != -1) {
-                var str = url.substr(1);
-                var strs = str.split("&");
-                ssh=strs[0].split("==")[1];//因为索书号中可能含有等号，所以等号是两个
-                $("#lab-ssh").html("索书号：" + ssh);//设置索书号的label
-                jh=strs[1].split("=")[1];
-                $("#lab-jh").html("第" + jh + "架");//设置架号的label
-                $(".shelf"+jh).css("background-color","#bce8f1");
-                $(".shelf"+jh).attr("id","anchor");
-            }
-
-            //          调整页面布局
-            if($(window).height()<$(window).width()){
-                $(".container").css("width","500px");
-                $(".container").css("margin","0 auto");
-            }
-        });
-    </script>
 
     <style type="text/css">
         table table td{

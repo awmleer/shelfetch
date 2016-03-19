@@ -15,31 +15,7 @@
     <!--<script src="js/jquery.min.js"></script>-->
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-
-    <script>
-        var ssh,jh;
-        $(document).ready(function(){
-            //读取URL参数
-            var url = location.search; //获取url中"?"符后的字串
-            if (url.indexOf("?") != -1) {
-                var str = url.substr(1);
-                var strs = str.split("&");
-                ssh=strs[0].split("==")[1];//因为索书号中可能含有等号，所以等号是两个
-                $("#lab-ssh").html("索书号：" + ssh);//设置索书号的label
-                jh=strs[1].split("=")[1];
-                $("#lab-jh").html("第" + jh + "架");//设置架号的label
-                $(".shelf"+jh).css("background-color","#bce8f1");
-                $(".shelf"+jh).attr("id","anchor");
-            }
-
-            //          调整页面布局
-            if($(window).height()<$(window).width()){
-                $(".container").css("width","500px");
-                $(".container").css("margin","0 auto");
-            }
-        });
-    </script>
+    <script src="js/result.js"></script>
 
     <style type="text/css">
         table table td{
@@ -437,40 +413,6 @@
         </script>
     </p>
 </div>
-
-<script>
-    function submiterror(){
-        var url = location.href;
-        $.post("http://121.42.209.162/cgi-bin/sferror.py",{url:url,ssh:ssh,jh:jh},
-                function(data){
-                    if(data=="ok\n"){
-                        alert("提交成功，谢谢您的反馈！");
-                    }
-                }
-        );
-    };
-
-    function email(){
-        var url = location.href;
-        url=url.match(/result.*\.html/);
-        var recv=$("#recv").val();
-        var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if(filter.test(recv)){
-            $.get("http://121.42.209.162/cgi-bin/sfmailresult.py",{recv:recv,url:url[0],ssh:ssh,jh:jh},
-                    function(data){
-                        if(data=="true\n"){
-                            alert("邮件已成功发送");
-                        }else{
-                            alert("抱歉，邮件发送失败");
-                        }
-                    }
-            );
-        }else{
-            alert('您的电子邮件格式不正确');
-            return false;
-        }
-    }
-</script>
 
 </body>
 </html>
