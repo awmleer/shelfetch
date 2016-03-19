@@ -16,17 +16,14 @@
     <!-- 加载特效css -->
     <link rel="stylesheet" type="text/css" href="http://121.42.209.162/shelfetch/css/spinner.css">
 
+
+
+
     <script>
         $(document).ready(function () {
             //初始化waiting特效的margin
             var windowheight = $(window).height();
             $("#div-waiting").css("margin-top", windowheight * 0.3 + "px");
-//          记录&获取点击量
-//            $.get("http://121.42.209.162/cgi-bin/sfindexcount.py",{},
-//                    function(data){
-//                        $("#span-indexcount").html(data);
-//                    }
-//            );
 
 //          调整页面布局
             if ($(window).height() < $(window).width()) {
