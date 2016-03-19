@@ -439,17 +439,25 @@
 </div>
 
 <script>
+    /*错误报告*/
     function submiterror(){
         var url = location.href;
-        $.post("http://121.42.209.162/cgi-bin/sferror.py",{url:url,ssh:ssh,jh:jh},
-                function(data){
-                    if(data=="ok\n"){
-                        alert("提交成功，谢谢您的反馈！");
-                    }
-                }
-        );
-    };
+        var obj={url:url,ssh:ssh,jh:jh};
+        $.ajax({
+            url: "http://121.42.209.162:3031/api/zju/error",
+            type: "post",
+            data: JSON.stringify(obj)
+        }).done(function (data) {
+            if (data == "ok") {
+                alert("提交成功，谢谢您的反馈！");
+            }
+        }).fail(function () {
+            alert("获取信息失败，请稍后再试");
+        });
+    }
 
+
+    /*发送邮件*/
     function email(){
         var url = location.href;
         url=url.match(/result.*\.html/);
