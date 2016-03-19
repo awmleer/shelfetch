@@ -78,8 +78,8 @@
     <button onclick="location.href='index.html'" class="btn btn-default" style="float: right;">返回</button>
 
     <div style="margin: 1em auto;">
-        <span id="page" class="label label-primary">第1页/共x页</span>
-        <span id="keyword" class="label label-primary">搜索词：keyword</span>
+        <span id="page" class="label label-primary">第{{ page }}页/共{{ total }}页</span>
+        <span id="keyword" class="label label-primary">搜索词：{{ keyword }}</span>
     </div>
 
     <div class="alert alert-warning">注：目前查看架位的功能仅支持紫金港基础流通书库</div>

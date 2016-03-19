@@ -5,16 +5,16 @@ appsearch.controller("ctrlsearch", function ($scope, $http) {
     urldata = urldata.replace("?", "");
     urldata = urldata.replace("#", "");
     var urltemp = urldata.split("&");
-    keyword = decodeURI(urltemp[0]);
-    page = urltemp[1];
+    $scope.keyword = decodeURI(urltemp[0]);
+    $scope.page = urltemp[1];
 
 
     $http({
         url: 'http://121.42.209.162:3031/api/zju/search',
         method: 'get',
         params: {
-            keyword: keyword,
-            page: page
+            keyword: $scope.keyword,
+            page: $scope.page
         }
     }).success(function (data) {
         $scope.books = data;
@@ -28,32 +28,29 @@ appsearch.controller("ctrlsearch", function ($scope, $http) {
 
 
         /*标头信息*/
-        $("#keyword").text("搜索词：" + keyword);
-
-        var total = obj.length;
-        $("#page").text("第" + page + "页/共" + total + "页");
+        var $scope.total = obj.length;
 
 
         /*分页模块*/
-        if (total < 5) {
+        if ($scope.total < 5) {
             var i;
-            for (i = total + 1; i <= 5; i++) {
+            for (i = $scope.total + 1; i <= 5; i++) {
                 $("#page" + i).hide();
             }
         }
 
-        if (page < 3) {
+        if ($scope.page < 3) {
             j = 1;
-        } else if (page > total - 2) {
-            j = total - 4;
+        } else if ($scope.page > $scope.total - 2) {
+            j = $scope.total - 4;
         } else {
-            j = page - 2;
+            j = $scope.page - 2;
         }
         var iii;
         for (iii = 1; iii <= 5; iii++) {
             $("#page" + iii + " a").text(j);
-            if (j != page)$("#page" + iii + " a").attr("href", "search.html?" + keyword + "&" + j);
-            if (j == page)$("#page" + iii).addClass("active");
+            if (j != $scope.page)$("#page" + iii + " a").attr("href", "search.html?" + $scope.keyword + "&" + j);
+            if (j == $scope.page)$("#page" + iii).addClass("active");
             j++;
         }
 
