@@ -1,6 +1,6 @@
 var appsearch = angular.module("search", []);
 appsearch.controller("ctrlsearch", function ($scope, $http) {
-    //            获取搜索的书名
+    /*获取搜索的书名*/
     urldata = location.search;
     urldata = urldata.replace("?", "");
     urldata = urldata.replace("#", "");
@@ -28,7 +28,7 @@ appsearch.controller("ctrlsearch", function ($scope, $http) {
 
 
         /*标头信息*/
-        var $scope.total = obj.length;
+        $scope.total = obj.length;
 
 
         /*分页模块*/
