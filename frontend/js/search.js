@@ -17,9 +17,9 @@ appsearch.controller("ctrlsearch", function ($scope, $http) {
             page: $scope.page
         }
     }).success(function (data) {
-        $scope.books = data;
-        var obj = eval(data);
-        if (obj.length == 0) {
+        $scope.books = data.content;
+        console.log($scope.books.length);
+        if ($scope.books.length == 0) {
             $("#div-waiting").hide();
             $("#div-noresult").show();
             return false;
@@ -28,7 +28,7 @@ appsearch.controller("ctrlsearch", function ($scope, $http) {
 
 
         /*标头信息*/
-        $scope.total = obj.length;
+        $scope.total = $scope.books.length;
 
 
         /*分页模块*/
