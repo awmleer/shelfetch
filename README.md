@@ -1,7 +1,7 @@
 #shelfetch
 
-frontend是前端代码
-backend是后端代码
+frontend是前端代码  
+backend是后端代码  
 
 ##v2版本升级说明
 
@@ -10,7 +10,7 @@ backend是后端代码
 
 ##环境配置
 
-python 3.5.2
-django1.0
-nginx
-uwsgi
+python 3.5.2  
+django1.0  
+nginx  
+uwsgi  
