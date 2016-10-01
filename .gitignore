@@ -1,0 +1,5 @@
+.idea/
+backend/.idea/
+backend/shelfetch/.idea/
+frontend/.idea/
+backend/shelfetch/db.sqlite3
