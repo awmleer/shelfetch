@@ -1,0 +1,40 @@
+<ion-view view-title="{{ appearance.items_panel_description.items[item_id].showing_name }}">
+  <ion-content class="padding big-background">
+    <div class="padding item-detail translucent">
+      <div class="row">
+        <div class="col">
+          <img src="{{GAME_BASE_URL+'image/'+appearance.items_panel_description.items[item_id].background_img}}" class="item-img">
+          <h3>{{appearance.items_panel_description.items[item_id].showing_name}}</h3>
+          <p>提示：{{appearance.items_panel_description.items[item_id].tip}}</p>
+          <p>属性：</p>
+          <div ng-repeat="value in appearance.items_panel_description.items[item_id].detail_values" class="row row-no-padding">
+            <div class="col col-33">{{value.style_data.name}}</div>
+            <div class="col" ng-if="value.style=='html'">
+              <span ng-repeat="data in value.style_data.template">
+                <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="appearance.items_panel_description.items[item_id].article">
+        <div class="col">
+          <p>详情：</p>
+          <div ng-bind-html="appearance.items_panel_description.items[item_id].article"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <a href="#/tab/items/list/" class="button button-plain button-borderless" style="color: crimson">取消</a>
+        </div>
+        <div class="col" style="text-align: right">
+          <button ng-click="use_item()" class="button button-plain button-borderless" style="color: #56208c">使用</button>
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

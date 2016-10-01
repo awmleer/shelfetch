@@ -1,0 +1,35 @@
+<ion-view view-title="物品">
+  <ion-content class="big-background padding">
+
+
+    <div class="padding" ng-repeat="(item_id,item) in appearance.items_panel_description.items">
+      <div class="card item-card translucent" style="position: relative;">
+        <div class="twinkle-mask" ng-class="{'twinkling':item.invoking}"></div>
+        <div class="cd-mask" ng-class="{'twinkling':item.invoking}"></div>
+        <span style="float: right;padding-top: 6px;padding-right: 6px">X{{values[item.count_value_id]}}</span>
+        <div ng-click="use_item()">
+          <!--<img src="{{GAME_BASE_URL+'image/'+item.background_img}}" class="item-img">-->
+          <img src="http://p2.sinaimg.cn/2121586665/180/27481319294382" class="item-img">
+          <div class="item-info">
+            <h4>{{item.showing_name}}</h4>
+            <div ng-repeat="value in item.summary_values" style="display: inline-block;margin-right: 8px">
+              <div style="display: inline-block;" ng-if="value.style_data.name">{{value.style_data.name}}</div>
+              <div style="display: inline-block;" ng-if="value.style=='html'">
+              <span ng-repeat="data in value.style_data.template">
+                <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button style="position: absolute;bottom: 8px;right: 8px;height: 20px;line-height:20px;min-height:20px;padding: 0 10px;font-weight:bold;z-index: 0" ui-sref="tab.items-detail({'item_id':item_id})" class="button button-clear button-dark button-small">详情</button>
+
+
+      </div>
+    </div>
+
+
+  </ion-content>
+</ion-view>

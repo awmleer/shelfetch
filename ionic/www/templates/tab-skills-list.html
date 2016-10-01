@@ -1,0 +1,43 @@
+<ion-view view-title="技能">
+  <ion-content class="big-background">
+
+    <div class="row row-wrap">
+      <div class="col col-50" ng-repeat="(skill_id,skill) in appearance.skills_panel_description.skills">
+        <div class="card skill-card translucent ">
+          <div ng-click="use_skill()">
+            <img src="{{GAME_BASE_URL+'image/'+skill.background_img}}" class="skill-img">
+            <h4>{{skill.showing_name}}</h4>
+          </div>
+          <p>{{skill.tip}}</p>
+          <div ng-repeat="value in skill.summary_values" style="display: inline-block;margin-right: 8px">
+            <div style="display: inline-block;" ng-if="value.style_data.name">{{value.style_data.name}}</div>
+            <div style="display: inline-block;" ng-if="value.style=='html'">
+              <!--todo style不是html时的处理-->
+              <span ng-repeat="data in value.style_data.template">
+                <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+              </span>
+            </div>
+          </div>
+          <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+          <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+          <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+          <br><button style="float: right;height: 20px;line-height:20px;min-height:20px;padding: 0 10px;margin-top: 5px;font-weight:bold" ui-sref="tab.skills-detail({'skill_id':skill_id})" class="button button-clear button-dark button-small">详情</button>
+        </div>
+      </div>
+      <!--<div class="col col-50">-->
+      <!--<div class="card skill-card translucent">-->
+      <!--<img src="img/lorem.bmp" class="skill-img">-->
+      <!--<h4>Skill 1</h4>-->
+      <!--<p>Tips：This skill…</p>-->
+      <!--<p>-->
+      <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+      <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+      <!--<img src="img/icons/coin-stack.png">&nbsp;&nbsp;<span>20</span>-->
+      <!--</p>-->
+      <!--</div>-->
+      <!--</div>-->
+
+    </div>
+  </ion-content>
+</ion-view>

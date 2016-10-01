@@ -1,0 +1,40 @@
+<ion-view view-title="{{ appearance.skills_panel_description.skills[skill_id].showing_name }}">
+  <ion-content class="padding big-background">
+    <div class="padding skill-detail translucent">
+      <div class="row">
+        <div class="col">
+          <img src="{{GAME_BASE_URL+'image/'+appearance.skills_panel_description.skills[skill_id].background_img}}" class="skill-img">
+          <h3>{{appearance.skills_panel_description.skills[skill_id].showing_name}}</h3>
+          <p>提示：{{appearance.skills_panel_description.skills[skill_id].tip}}</p>
+          <p>属性：</p>
+          <div ng-repeat="value in appearance.skills_panel_description.skills[skill_id].detail_values" class="row row-no-padding">
+            <div class="col col-33">{{value.style_data.name}}</div>
+            <div class="col" ng-if="value.style=='html'">
+              <span ng-repeat="data in value.style_data.template">
+                <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" ng-show="appearance.skills_panel_description.skills[skill_id].article">
+        <div class="col">
+          <p>详情:</p>
+          <div ng-bind-html="appearance.skills_panel_description.skills[skill_id].article"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <a href="#/tab/skills/list/" class="button button-plain button-borderless" style="color: crimson">取消</a>
+        </div>
+        <div class="col" style="text-align: right">
+          <button ng-click="use_skill()" class="button button-plain button-borderless" style="color: #56208c">使用</button>
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

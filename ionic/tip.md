@@ -1,1 +1,0 @@
-init ionic project here

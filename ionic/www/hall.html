@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/buttons.css">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- your app's js -->
+  <script src="js/config.js"></script>
+  <script src="js/hall.js"></script>
+  <script src="js/static/store.min.js"></script>
+</head>
+<body ng-app="hall" ng-controller="HallCtrl" style="overflow: visible;">
+<div class="bar bar-header bar-stable">
+  <h1 class="title">我的游戏</h1>
+</div>
+<div class="content has-header">
+  <ion-list class="list">
+    <ion-item ng-repeat="game in games | orderBy:'session_id'" class="item" ng-click="game_click()">
+      {{game.game_id}}
+    </ion-item>
+  </ion-list>
+</div>
+
+
+
+
+</body>
+</html>

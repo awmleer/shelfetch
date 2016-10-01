@@ -1,0 +1,24 @@
+
+<ion-modal-view class="modal-translucent-black">
+  <!--<ion-header-bar class="bar bar-header bar-stable">-->
+    <!--<h1 class="title">New Contact</h1>-->
+    <!--<button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>-->
+  <!--</ion-header-bar>-->
+  <ion-content style="padding: 20px;">
+    <div class="padding">
+      <h2>{{game_looking.game_id}}</h2>
+      <p>开始时间：{{game_looking.start_time}}</p>
+      <p>参与玩家：<span ng-repeat="atten in game_looking.attendance">&nbsp;{{atten}}</span></p>
+      <p ng-bind-html="game_looking.introduction"></p>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button ng-click="modal.hide()" class="button button-plain button-borderless" style="color: #dc6c71">取消</button>
+      </div>
+      <div class="col" style="text-align: right">
+        <button ng-click="start_game()" class="button button-plain button-borderless" style="color: #f3f3f3">选择角色</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

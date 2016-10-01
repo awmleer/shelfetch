@@ -1,0 +1,85 @@
+<ion-view view-title="地图">
+  <ion-content class="big-background padding">
+
+  </ion-content>
+  <div style="position: fixed;left: 0;width: 100%;" ng-class="{'has-tabs':isIOS,'has-no-bottom-tabs':isAndroid}" class="translucent status" ng-click="toggle_full_panel()">
+    <i class="icon" ng-class="{'ion-chevron-up':!full_panel,'ion-chevron-down':full_panel}" style="position: absolute;top: 0;right: 12px;font-size: 18px;padding: 5px;"></i>
+    <div ng-show="full_panel" class="padding-left padding-bottom padding-top">
+      <div class="row" ng-repeat="value in appearance.status_panel_description.content_values">
+        <div class="col-20">{{value.style_data.name}}</div>
+        <div class="col-80">
+          <div ng-if="value.style=='progressbar'">
+            <!--<span style="width: 40px;display: inline-block;">{{value.style_data.name}}</span>-->
+            <div style="display: inline-block;height: 10px;width: calc(100% - 100px);background: rgba(0,0,0,0.6);">
+              <div style="height: 10px;background: #fff;opacity: 1;" ng-style="{'width':values[value.style_data.progress_value_id]*100+'%'}"></div>
+            </div>
+            <span style="width: 90px;display: inline-block;">
+                <span ng-repeat="data in value.style_data.template">
+                  <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                  <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+                </span>
+              </span>
+          </div>
+          <div ng-if="value.style=='html'">
+              <span ng-repeat="data in value.style_data.template">
+                  <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                  <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+                </span>
+          </div>
+        </div>
+      </div>
+      <div class="padding-left padding-right" ng-bind-html="values[appearance.status_panel_description.description_value_id]"></div>
+    </div>
+
+
+    <img src="{{BASE_URL+appearance.status_panel_description.avatar_url}}" class="avatar">
+    <div class="text">
+      <div>
+        {{status.player_name}}&nbsp;
+        <span ng-repeat="value in appearance.status_panel_description.status_values" class="status-values">
+          <span ng-repeat="data in value.style_data.template" ng-show="values[value.style_data.status_value_id]">
+            <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+            <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+          </span>
+          &nbsp;&nbsp;
+        </span>
+      </div>
+
+      <table style="table-layout:fixed;width: 100%;font-size: 12px">
+        <tbody><tr>
+          <td ng-repeat="value in appearance.status_panel_description.header_values" colspan="{{value.style=='progressbar'?3:1}}">
+
+            <div ng-if="value.style=='progressbar'">
+              <span style="width: 26px;display: inline-block;">{{value.style_data.name}}</span>
+              <div style="display: inline-block;height: 10px;width: calc(100% - 65px);background: rgba(0,0,0,0.6);">
+                <div style="height: 10px;background: #fff;opacity: 1;" ng-style="{'width':values[value.style_data.progress_value_id]*100+'%'}"></div>
+              </div>
+              <span style="width: 30px;display: inline-block;">
+                <span ng-repeat="data in value.style_data.template">
+                  <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                  <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+                </span>
+              </span>
+            </div>
+
+            <div ng-if="value.style=='html'">
+              <span ng-repeat="data in value.style_data.template">
+                  <span ng-if="data.kind=='html'" ng-bind-html="data.value"></span>
+                  <span ng-if="data.kind=='value_binding'">{{values[data.value]}}</span>
+                </span>
+            </div>
+
+          </td>
+        </tr></tbody>
+      </table>
+
+      <div class="row row-wrap">
+        <div class="col-50" ng-repeat="">
+          <!--<div ng-if="value.style=='progressbar">-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</ion-view>

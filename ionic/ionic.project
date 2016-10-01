@@ -1,0 +1,10 @@
+{
+  "name": "argassistant",
+  "app_id": "EWMv36fZ8z9sK6WP2UqPv8",
+  "proxies": [
+        {
+          "path": "/base",
+          "proxyUrl": "http://arg.joker.xeroe.net:11282"
+        }
+      ]
+}

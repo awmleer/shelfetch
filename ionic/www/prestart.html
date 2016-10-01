@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/buttons.css">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!--font-awesome-->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+
+  <!-- your app's js -->
+  <script src="js/config.js"></script>
+  <script src="js/prestart.js"></script>
+  <script src="js/static/store.min.js"></script>
+  <style>
+    .character_disable {
+      background: #c7c7c7;
+    }
+  </style>
+</head>
+<body ng-app="prestart" ng-controller="PrestartCtrl" style="overflow: visible;">
+<div class="bar bar-header bar-stable">
+  <a href="hall.html" class="button button-icon icon icon-left ion-chevron-left button-clear button-dark">返回</a>
+  <h1 class="title">请选择游戏角色</h1>
+</div>
+<div class="content has-header has-footer">
+  <ion-list class="list">
+    <ion-item ng-repeat="character in characters | orderBy:'character_name'" class="item item-avatar" ng-click="character_choose()" style="position: relative;" ng-class="{'character_disable':!character.selectable}">
+      <img src="{{GAME_BASE_URL + 'image/' + character.icon}}">
+      <i ng-show="character.character_id==choosed" class="radio-icon disable-pointer-events icon ion-checkmark" style="float: right;margin-top: 12px;margin-right: 12px;font-size: 24px"></i>
+      <h2 style="font-size: 18px"><b>{{character.showing_name}}</b>&nbsp;&nbsp;<small style="font-size: 12px">{{character.comment}}</small></h2>
+      <p style="font-size: 12px" ng-bind-html="character.description"></p>
+    </ion-item>
+    <!--<ion-radio ng-model="choice" ng-value="'B'">Choose B</ion-radio>-->
+  </ion-list>
+</div>
+<div class="bar bar-footer" style="padding-top: 2px;padding-bottom: 0">
+  <button class="button button-balanced button-block" style="margin: 0;" ng-click="confirm_selection()">确认选择</button>
+</div>
+
+
+<script id="modal-not-begin.html" type="text/ng-template">
+  <ion-modal-view class="modal-translucent-black">
+    <ion-content style="padding: 20px;padding-top: 140px">
+      <div class="padding" style="text-align: center">
+        <i class="fa fa-circle-o-notch fa-spin fa-fw" style="font-size: 60px;color: #ffffff;margin-bottom: 12px"></i><br>
+        <p>游戏尚未开始</p>
+      </div>
+
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col" style="text-align: right">
+          <!--todo 返回到哪里-->
+          <button ng-click="modal.hide()" class="button button-plain button-borderless" style="color: #f3f3f3;margin-top: 120px">返回主页</button>
+        </div>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+
+</script>
+
+</body>
+</html>
